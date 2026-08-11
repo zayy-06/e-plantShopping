@@ -7,23 +7,40 @@ function Cart() {
     (state) => state.cart.items
   );
 
-  const total = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
+  // Calculate total quantity
+  const totalItems = cartItems.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+
+  // Calculate total cart amount
+  const totalAmount = cartItems.reduce(
+    (total, item) =>
+      total + item.price * item.quantity,
     0
   );
 
   return (
-    <section className="cart-section">
+    <section className="cart-section" id="cart">
 
       <div className="cart-container">
 
         <h2>Shopping Cart</h2>
 
         {cartItems.length === 0 ? (
-          <p className="empty-cart">
-            Your cart is empty. Add some beautiful plants!
-          </p>
+
+          <div className="empty-cart">
+
+            <p>Your cart is empty.</p>
+
+            <p>
+              Add some beautiful plants to your cart!
+            </p>
+
+          </div>
+
         ) : (
+
           <>
             <div className="cart-items">
 
@@ -38,16 +55,27 @@ function Cart() {
 
             <div className="cart-summary">
 
+              <p>
+                Total Items: <strong>{totalItems}</strong>
+              </p>
+
               <h3>
-                Total: ${total.toFixed(2)}
+                Total Amount: ${totalAmount.toFixed(2)}
               </h3>
 
-              <button className="checkout-btn">
+              <button
+                className="checkout-btn"
+                onClick={() =>
+                  alert("Thank you for shopping with Paradise Nursery!")
+                }
+              >
                 Checkout
               </button>
 
             </div>
+
           </>
+
         )}
 
       </div>

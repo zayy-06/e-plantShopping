@@ -8,7 +8,7 @@ import {
 function CartItem({ item }) {
   const dispatch = useDispatch();
 
-  const handleIncrease = () => {
+  const increaseQuantity = () => {
     dispatch(
       updateQuantity({
         id: item.id,
@@ -17,7 +17,7 @@ function CartItem({ item }) {
     );
   };
 
-  const handleDecrease = () => {
+  const decreaseQuantity = () => {
     if (item.quantity > 1) {
       dispatch(
         updateQuantity({
@@ -28,14 +28,14 @@ function CartItem({ item }) {
     }
   };
 
-  const handleQuantityChange = (event) => {
-    const quantity = Number(event.target.value);
+  const handleQuantityChange = (e) => {
+    const newQuantity = Number(e.target.value);
 
-    if (quantity >= 1) {
+    if (newQuantity >= 1) {
       dispatch(
         updateQuantity({
           id: item.id,
-          quantity: quantity,
+          quantity: newQuantity,
         })
       );
     }
@@ -44,6 +44,9 @@ function CartItem({ item }) {
   const handleRemove = () => {
     dispatch(removeItem(item.id));
   };
+
+  // Total cost of this individual product
+  const itemTotal = item.price * item.quantity;
 
   return (
     <div className="cart-item">
@@ -59,20 +62,21 @@ function CartItem({ item }) {
         <h3>{item.name}</h3>
 
         <p className="cart-item-category">
-          {item.category}
+          Category: {item.category}
         </p>
 
         <p className="cart-item-price">
-          ${item.price}
+          Price: ${item.price.toFixed(2)}
         </p>
 
         <div className="quantity-controls">
 
           <button
-            onClick={handleDecrease}
+            onClick={decreaseQuantity}
             disabled={item.quantity <= 1}
+            aria-label={`Decrease quantity of ${item.name}`}
           >
-            -
+            −
           </button>
 
           <input
@@ -82,14 +86,18 @@ function CartItem({ item }) {
             onChange={handleQuantityChange}
           />
 
-          <button onClick={handleIncrease}>
+          <button
+            onClick={increaseQuantity}
+            aria-label={`Increase quantity of ${item.name}`}
+          >
             +
           </button>
 
         </div>
 
+        {/* Individual item total */}
         <p className="item-total">
-          Total: ${(item.price * item.quantity).toFixed(2)}
+          Item Total: ${itemTotal.toFixed(2)}
         </p>
 
         <button

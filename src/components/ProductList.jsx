@@ -1,45 +1,45 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../redux/CartSlice";
 
 const products = [
- {
-  id: 1,
-  name: "Jade Plant",
-  price: 28,
-  category: "Succulents",
-  description:
-    "A beautiful succulent plant with thick green leaves that is easy to maintain indoors.",
-  image:
-    "https://images.unsplash.com/photo-1525498128493-380d1990a112?auto=format&fit=crop&w=700&q=80",
-},
+  {
+    id: 1,
+    name: "Aloe Vera",
+    price: 25,
+    category: "Air Purifying Plants",
+    description:
+      "A beautiful and low-maintenance plant that is perfect for homes and offices.",
+    image:
+      "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=700&q=80",
+  },
   {
     id: 2,
     name: "Peace Lily",
     price: 30,
-    category: "Flowering Plants",
+    category: "Air Purifying Plants",
     description:
-      "A lovely indoor plant with elegant white flowers and fresh green leaves.",
-   image:
-  "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=700&q=80",
+      "A lovely indoor plant with elegant green leaves and beautiful flowers.",
+    image:
+      "https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&fit=crop&w=700&q=80",
   },
   {
     id: 3,
-    name: "Aloe Vera",
-    price: 20,
+    name: "Jade Plant",
+    price: 28,
     category: "Succulents",
     description:
-      "A popular low-maintenance succulent known for its useful and attractive leaves.",
+      "A beautiful succulent with thick green leaves that is easy to maintain.",
     image:
-      "https://images.unsplash.com/photo-1509423350716-97f9360b4e09?auto=format&fit=crop&w=700&q=80",
+      "https://images.unsplash.com/photo-1525498128493-380d1990a112?auto=format&fit=crop&w=700&q=80",
   },
   {
     id: 4,
     name: "Monstera",
     price: 35,
-    category: "Indoor Plants",
+    category: "Tropical Plants",
     description:
-      "A tropical plant with distinctive large leaves that adds beauty to any room.",
+      "A tropical plant with large decorative leaves that adds beauty to any room.",
     image:
       "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&w=700&q=80",
   },
@@ -47,7 +47,7 @@ const products = [
     id: 5,
     name: "Spider Plant",
     price: 22,
-    category: "Indoor Plants",
+    category: "Air Purifying Plants",
     description:
       "A hardy and attractive plant that is suitable for beginners.",
     image:
@@ -57,7 +57,7 @@ const products = [
     id: 6,
     name: "Rubber Plant",
     price: 32,
-    category: "Decorative Plants",
+    category: "Tropical Plants",
     description:
       "A stylish plant with glossy leaves that makes an excellent indoor decoration.",
     image:
@@ -68,66 +68,128 @@ const products = [
 function ProductList() {
   const dispatch = useDispatch();
 
+  const cartItems = useSelector((state) => state.cart.items);
+
+  const [addedProducts, setAddedProducts] = useState([]);
+
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
+
+    setAddedProducts((previous) => [
+      ...previous,
+      product.id,
+    ]);
   };
+
+  const categories = [
+    "Air Purifying Plants",
+    "Succulents",
+    "Tropical Plants",
+  ];
 
   return (
     <section className="product-list">
 
-      <div className="products-container">
+      {/* Navbar */}
+      <nav className="product-navbar">
+
+        <div className="navbar-logo">
+          Paradise Nursery
+        </div>
+
+        <div className="navbar-links">
+          <a href="#products">Plants</a>
+          <a href="#cart">Cart</a>
+          <a href="#about">About Us</a>
+        </div>
+
+      </nav>
+
+      <div
+        className="products-container"
+        id="products"
+      >
 
         <h2>Our Plants</h2>
 
         <p className="products-intro">
-          Explore our collection of beautiful plants and bring
-          nature into your home.
+          Explore our beautiful collection of plants.
         </p>
 
-        <div className="products-grid">
+        {categories.map((category) => {
 
-          {products.map((product) => (
+          const categoryProducts = products.filter(
+            (product) => product.category === category
+          );
 
-            <div className="product-card" key={product.id}>
+          return (
+            <div
+              className="category-section"
+              key={category}
+            >
 
-              <img
-                src={product.image}
-                alt={product.name}
-                className="product-image"
-              />
+              <h3 className="category-title">
+                {category}
+              </h3>
 
-              <div className="product-info">
+              <div className="products-grid">
 
-                <span className="product-category">
-                  {product.category}
-                </span>
+                {categoryProducts.map((product) => {
 
-                <h3>{product.name}</h3>
+                  const isAdded =
+                    addedProducts.includes(product.id);
 
-                <p>{product.description}</p>
+                  return (
+                    <div
+                      className="product-card"
+                      key={product.id}
+                    >
 
-                <div className="product-bottom">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        className="product-image"
+                      />
 
-                  <span className="product-price">
-                    ${product.price}
-                  </span>
+                      <div className="product-info">
 
-                  <button
-                    className="add-to-cart-btn"
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    Add to Cart
-                  </button>
+                        <h3>{product.name}</h3>
 
-                </div>
+                        <p>
+                          {product.description}
+                        </p>
+
+                        <div className="product-bottom">
+
+                          <span className="product-price">
+                            ${product.price}
+                          </span>
+
+                          <button
+                            className="add-to-cart-btn"
+                            onClick={() =>
+                              handleAddToCart(product)
+                            }
+                            disabled={isAdded}
+                          >
+                            {isAdded
+                              ? "Added to Cart"
+                              : "Add to Cart"}
+                          </button>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+                  );
+                })}
 
               </div>
 
             </div>
-
-          ))}
-
-        </div>
+          );
+        })}
 
       </div>
 

@@ -5,50 +5,43 @@ import ProductList from "./components/ProductList";
 import Cart from "./components/Cart";
 
 function App() {
-  const [started, setStarted] = useState(false);
+  const [showProductList, setShowProductList] = useState(false);
 
   return (
     <div className="app">
 
-      {/* Landing Page */}
-      <section className="landing-page">
+      {!showProductList ? (
+        <>
+          <section className="landing-page">
+            <div className="overlay"></div>
 
-        <div className="overlay"></div>
+            <div className="landing-content">
+              <h1>Paradise Nursery</h1>
 
-        <div className="landing-content">
+              <p>Bring Nature Into Your Home</p>
 
-          <h1>Paradise Nursery</h1>
+              <p className="intro-text">
+                Discover beautiful indoor plants and create a fresh,
+                peaceful and healthy environment in your home.
+              </p>
 
-          <p>
-            Bring Nature Into Your Home
-          </p>
+              <button
+                className="get-started-btn"
+                onClick={() => setShowProductList(true)}
+              >
+                Get Started
+              </button>
+            </div>
+          </section>
 
-          <p className="intro-text">
-            Discover beautiful indoor plants and create a fresh,
-            peaceful and healthy environment in your home.
-          </p>
-
-          <button
-            className="get-started-btn"
-            onClick={() => setStarted(true)}
-          >
-            Get Started
-          </button>
-
-          {started && (
-            <p className="welcome-message">
-              Welcome to Paradise Nursery! Explore our beautiful
-              collection of plants.
-            </p>
-          )}
-
-        </div>
-
-      </section>
-
-<AboutUs />
-<ProductList />
-<Cart />
+          <AboutUs />
+        </>
+      ) : (
+        <>
+          <ProductList />
+          <Cart />
+        </>
+      )}
 
     </div>
   );
