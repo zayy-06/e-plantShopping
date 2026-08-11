@@ -1,18 +1,17 @@
-# Paradise Nursery
+# e-plantShopping
 
 ## Project Name
 
-Paradise Nursery Plant Shop
+e-plantShopping - Paradise Nursery Plant Shop
 
 ## Project Description
 
-Paradise Nursery is a React-based online plant shop application.
-The application allows users to explore a collection of beautiful
-plants and add their favorite plants to a shopping cart.
+e-plantShopping is a React-based plant shopping application called
+Paradise Nursery.
 
-The project provides a simple and user-friendly shopping experience
-for customers who are interested in purchasing indoor and decorative
-plants.
+The application allows users to browse different categories of plants,
+view plant details and prices, add plants to a shopping cart, update
+quantities, remove products, and view the total cart amount.
 
 ## Features
 
@@ -21,15 +20,28 @@ plants.
 - Get Started button
 - About Us section
 - Plant product listing
-- Product categories
-- Product prices and descriptions
-- Add plants to shopping cart
+- Three plant categories
+- Product images
+- Product names and prices
+- Add to Cart functionality
+- Add to Cart button becomes disabled after adding a product
 - Increase product quantity
 - Decrease product quantity
 - Update product quantity
 - Remove products from cart
-- Shopping cart total
-- Responsive design
+- Individual item total
+- Total number of items
+- Total cart amount
+- Shopping cart
+- Navigation links
+
+## Plant Categories
+
+The application contains three plant categories:
+
+1. Air Purifying Plants
+2. Succulents
+3. Tropical Plants
 
 ## Technologies Used
 
@@ -40,39 +52,49 @@ plants.
 - React Redux
 - Vite
 
-## Project Structure
+## Main Project Files
 
-The project contains the following main components:
-
-- `App.jsx` - Main Paradise Nursery landing page
-- `App.css` - Application styling and landing page background image
+- `App.jsx` - Paradise Nursery landing page and Get Started functionality
+- `App.css` - Styling and landing page background image
 - `AboutUs.jsx` - Company information
-- `ProductList.jsx` - Plant product listing
-- `CartItem.jsx` - Individual shopping cart item
+- `ProductList.jsx` - Plant listing and categories
+- `CartItem.jsx` - Individual cart item functionality
 - `CartSlice.jsx` - Redux cart state and reducer functions
+- `Cart.jsx` - Shopping cart and total amount
 
-## Company
+## Redux Cart Functionality
 
-Paradise Nursery is dedicated to bringing the beauty of nature into
-homes and workplaces by providing beautiful and easy-to-care-for plants.
+The application uses Redux Toolkit to manage the shopping cart.
 
-Our goal is to provide customers with quality plants and a simple,
-convenient, and enjoyable shopping experience.
+The `CartSlice.jsx` file implements:
 
-## Cart Functionality
+- `addItem()`
+- `removeItem()`
+- `updateQuantity()`
 
-The shopping cart uses Redux Toolkit to manage cart state.
+## Company Information
 
-The cart supports:
+Paradise Nursery is a plant shop that provides beautiful indoor,
+decorative, tropical, succulent, and air-purifying plants.
 
-- Adding products
-- Removing products
-- Increasing quantities
-- Decreasing quantities
-- Updating quantities
-- Calculating the total price
+The goal of Paradise Nursery is to help customers bring the beauty
+of nature into their homes and create a fresh and peaceful environment.
+
+## Shopping Cart
+
+Users can add plants to the shopping cart and manage their purchases.
+
+The cart allows users to:
+
+- Increase quantity
+- Decrease quantity
+- Enter a quantity manually
+- Remove a product
+- View the total cost of each item
+- View the total number of items
+- View the total cart amount
 
 ## Conclusion
 
-Paradise Nursery provides a simple online plant shopping experience
-built with React and Redux Toolkit
+e-plantShopping provides a simple and user-friendly online plant
+shopping experience built with React and Redux Toolkit.
