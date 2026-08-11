@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   removeItem,
   updateQuantity,
@@ -7,6 +7,11 @@ import {
 
 function CartItem({ item }) {
   const dispatch = useDispatch();
+
+  // Get all cart items from Redux
+  const cartItems = useSelector(
+    (state) => state.cart.items
+  );
 
   const increaseQuantity = () => {
     dispatch(
@@ -45,8 +50,23 @@ function CartItem({ item }) {
     dispatch(removeItem(item.id));
   };
 
-  // Total cost of this individual product
+  // Total cost of this individual item
   const itemTotal = item.price * item.quantity;
+
+  // Total quantity of all items in cart
+  const totalItems = cartItems.reduce(
+    (total, cartItem) =>
+      total + cartItem.quantity,
+    0
+  );
+
+  // Total amount of the complete cart
+  const totalCartAmount = cartItems.reduce(
+    (total, cartItem) =>
+      total +
+      cartItem.price * cartItem.quantity,
+    0
+  );
 
   return (
     <div className="cart-item">
@@ -66,7 +86,7 @@ function CartItem({ item }) {
         </p>
 
         <p className="cart-item-price">
-          Price: ${item.price.toFixed(2)}
+          Unit Price: ${item.price.toFixed(2)}
         </p>
 
         <div className="quantity-controls">
@@ -74,7 +94,6 @@ function CartItem({ item }) {
           <button
             onClick={decreaseQuantity}
             disabled={item.quantity <= 1}
-            aria-label={`Decrease quantity of ${item.name}`}
           >
             −
           </button>
@@ -88,7 +107,6 @@ function CartItem({ item }) {
 
           <button
             onClick={increaseQuantity}
-            aria-label={`Increase quantity of ${item.name}`}
           >
             +
           </button>
@@ -106,6 +124,23 @@ function CartItem({ item }) {
         >
           Remove
         </button>
+
+        {/* Overall cart information */}
+        <div className="cart-total-info">
+
+          <p>
+            Total Items in Cart:{" "}
+            <strong>{totalItems}</strong>
+          </p>
+
+          <p>
+            Total Cart Amount:{" "}
+            <strong>
+              ${totalCartAmount.toFixed(2)}
+            </strong>
+          </p>
+
+        </div>
 
       </div>
 

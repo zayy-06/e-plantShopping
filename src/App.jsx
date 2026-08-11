@@ -12,7 +12,7 @@ function App() {
 
       {!showProductList ? (
         <>
-          <section className="landing-page">
+          <section className="landing-page" id="home">
             <div className="overlay"></div>
 
             <div className="landing-content">

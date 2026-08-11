@@ -72,14 +72,14 @@ function ProductList() {
 
   const [addedProducts, setAddedProducts] = useState([]);
 
-  const handleAddToCart = (product) => {
-    dispatch(addItem(product));
+const handleAddToCart = (product) => {
+  dispatch(addItem(product));
 
-    setAddedProducts((previous) => [
-      ...previous,
-      product.id,
-    ]);
-  };
+  setAddedProducts((previous) => [
+    ...previous,
+    product.id,
+  ]);
+};
 
   const categories = [
     "Air Purifying Plants",
@@ -98,10 +98,11 @@ function ProductList() {
         </div>
 
         <div className="navbar-links">
-          <a href="#products">Plants</a>
-          <a href="#cart">Cart</a>
-          <a href="#about">About Us</a>
-        </div>
+  <a href="#home">Home</a>
+  <a href="#products">Plants</a>
+  <a href="#cart">Cart</a>
+  <a href="#about">About Us</a>
+</div>
 
       </nav>
 
@@ -166,16 +167,14 @@ function ProductList() {
                           </span>
 
                           <button
-                            className="add-to-cart-btn"
-                            onClick={() =>
-                              handleAddToCart(product)
-                            }
-                            disabled={isAdded}
-                          >
-                            {isAdded
-                              ? "Added to Cart"
-                              : "Add to Cart"}
-                          </button>
+  className="add-to-cart-btn"
+  onClick={() => handleAddToCart(product)}
+  disabled={addedProducts.includes(product.id)}
+>
+  {addedProducts.includes(product.id)
+    ? "Added to Cart"
+    : "Add to Cart"}
+</button>
 
                         </div>
 
